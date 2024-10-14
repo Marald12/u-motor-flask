@@ -16,7 +16,7 @@ html, body {
 body { display: flex; flex-direction: column; }
 
 header {
-    background-color: aqua;
+    background-color: #1E2122;
 }
 
 
@@ -27,7 +27,7 @@ main {
 
 
 footer {
-    background-color: rgb(3, 21, 21);
+    background-color: #1E2122;
     margin: 0;
     padding: 0;
     flex-shrink: 0;
@@ -191,8 +191,6 @@ footer {
     color: #0056b3;
 }
 
-
-
 .order-car-container{
     background-color: #333;
     max-width: 90%;
@@ -304,8 +302,9 @@ footer {
 }
 
 .online-support a {
-    color: rgb(204, 35, 1);
+    color: #86989B;
     text-decoration: none;
+    margin-left: 7px;
 }
 
 .online-support p {
@@ -411,3 +410,32 @@ footer {
     top: 30px;
     font-size: 70px;
 }
+
+
+/*Мои изменения*/
+.navlist {
+    > li:not(:first-child) {
+        margin-left: 15px;
+    }
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 26px;
+    font-family: "Exo 2", sans-serif;
+    text-transform: uppercase;
+}
+
+.link__icon {
+    display: flex;
+
+    > span {
+        margin-left: 10px;
+    }
+}
+
+.social-icons-text,
+.online-support-text {
+    font-weight: 600;
+}
+/* Конец*/
