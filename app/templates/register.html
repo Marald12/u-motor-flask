@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div >
+        <form action="{{ url_for('main.register') }}" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                {{ form.user_name.label(class="form-label") }}
+                {{ form.user_name(class="form-control") }}
+            </div>
+            <div class="mb-3">
+                {{ form.user_email.label(class="form-label") }}
+                {{ form.user_email(class="form-control") }}
+            </div>
+            <div class="mb-3">
+                {{ form.user_phone.label(class="form-label") }}
+                {{ form.user_phone(class="form-control") }}
+            </div>
+            <div class="mb-3">
+                {{ form.user_password.label(class="form-label") }}
+                {{ form.user_password(class="form-control") }}
+            </div>
+            <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
+        </form>
+    </div>
+{% endblock %}

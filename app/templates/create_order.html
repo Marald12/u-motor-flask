@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}
+Создание заказа
+{% endblock %}
+
+{% block content %}
+<div class="order-container">
+    <h1 class=" text-center">Створити замовлення</h1>
+    {% if current_user.is_authenticated %}
+    <form action="{{ url_for('main.create_order', car_id=car.id) }}" method="POST">
+        <!-- CSRF-токен -->
+        {{ form.hidden_tag() }}
+
+        <div class="order-car-container">
+            <div class="order-car-container-img">
+                <div class="container-fluid" style="padding-left: 0px;">
+                    <img src="{{ url_for('static', filename='photos/cars/' + car.image) }}" class="card-img-top" alt="{{ car.car }}">
+                </div>
+            </div>
+            <div class="order-car-container-text">
+                <p class="car-text">{{ car.brand }}</p>
+                <p class="car-text">{{ car.body }}</p>
+                <p class="car-text" id="price">Цена: {{ car.price }} грн/год</p>
+                <p class="car-text" id="total-price">Итого: 0 грн</p>
+            </div>
+        </div>
+        
+        <div>
+            {{ form.start_date.label }} {{ form.start_date(id='start-date') }}  <!-- Передаем именованный аргумент -->
+            {{ form.start_time.label }} {{ form.start_time(id='start-time') }}  <!-- Передаем именованный аргумент -->
+    
+            {{ form.stop_date.label }} {{ form.stop_date(id='stop-date') }}    <!-- Передаем именованный аргумент -->
+            {{ form.stop_time.label }} {{ form.stop_time(id='stop-time') }}    <!-- Передаем именованный аргумент -->
+        </div>
+
+        <!-- Скрытое поле для хранения общей цены -->
+        {{ form.total_price(id='total_price') }}
+
+        <!-- Кнопка для расчета цены -->
+        <button type="button" onclick="calculatePrice()">Рассчитать цену</button>
+
+        <!-- Кнопка для отправки формы -->
+        {{ form.submit() }}
+    </form>
+    {%else%}
+    <p class="text-center" style="font-size: 30px;">Ви не зареєстровані тому вкажіть свій нормер тел.</p>
+    <form action="{{ url_for('main.create_order', car_id=car.id) }}" method="POST">
+        <!-- CSRF-токен -->
+        {{ form.hidden_tag() }}
+
+        <div class="order-car-container">
+            <div class="order-car-container-img">
+                <div class="container-fluid order-car-container-img-2" style="padding-left: 0px; padding-right: 0px;">
+                    <img src="{{ url_for('static', filename='photos/cars/' + car.image) }}" class="card-img" alt="{{ car.car }}">
+                    <p class="car-order-text">{{ car.car }}</p>
+                </div>
+            </div>
+
+            <div class="order-car-container-text">
+                <p class="car-text">{{ car.car }}</p>
+                <p class="car-text">{{ car.brand }}</p>
+                <p class="car-text">{{ car.body }}</p>
+                <p class="car-text" id="price">Ціна: {{ car.price }} грн/год</p>
+                <p class="car-text" id="total-price">Загально: 0 грн</p>
+            </div>
+        </div>
+        
+        <div>
+            {{ form.user_phone.label }} {{ form.user_phone() }}
+            {{ form.start_date.label }} {{ form.start_date(id='start-date') }}  <!-- Передаем именованный аргумент -->
+            {{ form.start_time.label }} {{ form.start_time(id='start-time') }}  <!-- Передаем именованный аргумент -->
+    
+            {{ form.stop_date.label }} {{ form.stop_date(id='stop-date') }}    <!-- Передаем именованный аргумент -->
+            {{ form.stop_time.label }} {{ form.stop_time(id='stop-time') }}    <!-- Передаем именованный аргумент -->
+        </div>
+
+        <!-- Скрытое поле для хранения общей цены -->
+        {{ form.total_price(id='total_price') }}
+
+        <!-- Кнопка для расчета цены -->
+        <button type="button" onclick="calculatePrice()">Рассчитать цену</button>
+
+        <!-- Кнопка для отправки формы -->
+        {{ form.submit() }}
+    {%endif%}
+
+
+</div>
+
+<script>
+    function calculatePrice() {
+        const startDate = new Date(`${document.getElementById("start-date").value}T${document.getElementById("start-time").value}`);
+        const stopDate = new Date(`${document.getElementById("stop-date").value}T${document.getElementById("stop-time").value}`);
+        
+        if (isNaN(startDate) || isNaN(stopDate)) {
+            alert("Пожалуйста, введите корректные даты и время.");
+            return false;
+        }
+
+        if (startDate >= stopDate) {
+            alert("Дата и время окончания должны быть позже даты и времени начала.");
+            return false;
+        }
+
+        // Расчет разницы во времени в часах
+        const hours = Math.ceil((stopDate - startDate) / (1000 * 60 * 60)); // Разница в часах
+        const pricePerHour = {{ car.price }}; // Цена за час
+        const totalPrice = hours * pricePerHour; // Общая цена
+
+        // Обновление отображаемой общей цены
+        document.getElementById("total-price").innerText = `Итого: ${totalPrice} грн`;
+
+        // Обновление значения в поле формы total_price
+        document.getElementById("total_price").value = totalPrice; 
+    }
+</script>
+
+{% endblock %}
