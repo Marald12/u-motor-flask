@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h3 class="car-text-h text-center">Машини нашої компанії</h3>
+<h3 class="car-text-h text-center cars__title">Машини U-Motor</h3>
 <div class="main-car-card">
   <div id="carCarousel" class="carousel slide container-fluid" >
     <div class="carousel-inner">
@@ -13,10 +13,10 @@
                     <img src="{{ url_for('static', filename='photos/cars/' + car.image) }}" class="card-img-top" alt="{{ car.car }}">
                 </div>
                 <div class="text-container container-fluid" style="flex: 1;">
-                    <p class="car-text">{{ car.car }}</p>
-                    <p class="car-text">{{ car.brand }}</p>
-                    <p class="car-text">{{ car.body }}</p>
-                    <p class="car-text">{{ car.price }} грн/год</p>
+                    <p class="car-text">Машина: {{ car.car }}</p>
+                    <p class="car-text">Марка: {{ car.brand }}</p>
+                    <p class="car-text">Тип: {{ car.body }}</p>
+                    <p class="car-text">Цена: {{ car.price }} грн/год</p>
                     <a href="{{url_for('main.create_order', car_id=car.id)}}">
                         <button class="car-bt">Орендувати</button>
                     </a>
@@ -25,13 +25,13 @@
         </div>
         {% endfor %}
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carCarousel" data-bs-slide="prev">
+    <button class="carousel-control-prev slider__button" type="button" data-bs-target="#carCarousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon " aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+        <!--        Prev-->
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carCarousel" data-bs-slide="next">
+    <button class="carousel-control-next slider__button" type="button" data-bs-target="#carCarousel" data-bs-slide="next">
         <span class="carousel-control-next-icon " aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+        <!--        Next-->
     </button>
     </div>
 </div>

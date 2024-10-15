@@ -279,9 +279,6 @@ footer {
 
 .block-social-icons,
 .block-online-support {
-    border-radius: 2vh;
-    border: solid #666 ;
-    border-width: 3px;
     height: auto;
     padding: 20px;
     width: auto;
@@ -380,7 +377,6 @@ footer {
     flex-direction: column;
     align-items: flex-end;
     padding-right: 10vh;
-    gap: 20px;
     max-height: 200px;
     align-self: flex-start;
     margin-top: 8vh;
@@ -389,20 +385,23 @@ footer {
 
 
 .car-text {
-    font: 2em sans-serif;
-    margin-top: 1px;
+    font-family: "Exo 2", sans-serif;
+    font-weight: 300;
+    font-size: 31px;
     color: white;
     margin-bottom: 5px;
 }
 
 .car-bt {
+    margin-top: 30px;
     background-color: white;
     color: rgb(33, 37, 41);
     border: none;
-    width: auto;
-    height: auto;
-    font: 2em sans-serif;
-    border-radius: 2vh;
+    font-family: "Exo 2", sans-serif;
+    font-size: 26px;
+    font-weight: 300;
+    border-radius: 10px;
+    padding: 5px 15px;
 }
 
 .car-text-h {
@@ -469,6 +468,29 @@ footer {
 .block__advantages_container {
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 0 15px;
+}
+
+@media (max-width: 768px) {
+    .block__advantages_block:not(:first-child),
+    .block__what_block:not(:first-child) {
+        margin-top: 15px;
+    }
+
+    .image__block {
+        height: 460px;
+    }
+
+    .image__block_title {
+        max-width: 500px;
+        font-size: 21px;
+    }
+
+    .image__block_description {
+        max-width: 400px;
+        font-size: 16px;
+    }
 }
 
 .block__advantages_block {
@@ -491,6 +513,8 @@ footer {
 .block__what_container {
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 0 15px;
 }
 
 .block__what_block {
@@ -522,5 +546,34 @@ footer {
 .block__about-us > p {
     max-width: 900px;
     text-align: center;
+}
+
+.hhhhhh {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.slider__button {
+    height: 50px;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 50%;
+}
+
+.cars__title {
+    font-family: "Exo 2", sans-serif;
+    font-size: 41px;
+    font-weight: 400;
+    position: relative;
+}
+.cars__title:before {
+    content: '';
+    position: absolute;
+    width: 340px;
+    height: 3px;
+    border-radius: 5px;
+    background: #1E2122;
+    bottom: -10px;
 }
 /* Конец*/
