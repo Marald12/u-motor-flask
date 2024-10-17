@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="order-container">
-    <h1 class=" text-center">Створити замовлення</h1>
+    <h1 class="text-center title">Створити замовлення</h1>
     {% if current_user.is_authenticated %}
     <form action="{{ url_for('main.create_order', car_id=car.id) }}" method="POST">
         <!-- CSRF-токен -->
