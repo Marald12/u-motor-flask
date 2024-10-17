@@ -634,13 +634,14 @@ footer {
 
 .cars__title, .title {
     font-family: "Exo 2", sans-serif;
-    font-size: 41px;
+    font-size: 36px;
     font-weight: 400;
     position: relative;
 }
 
 .title {
     margin-top: 20px;
+    padding: 0 10px;
 }
 
 .cars__title:before {
@@ -656,7 +657,7 @@ footer {
 .title:before {
     content: '';
     position: absolute;
-    width: 430px;
+    width: 380px;
     height: 3px;
     border-radius: 5px;
     background: #1E2122;
@@ -726,6 +727,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0 15px;
 }
 .popup_hide {
     opacity: 0;
