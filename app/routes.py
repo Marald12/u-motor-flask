@@ -12,12 +12,46 @@ bp = Blueprint("main", __name__)
 UPLOAD_FOLDER_CARS = Config.UPLOAD_FOLDER_CARS
 UPLOAD_FOLDER_USERS = Config.UPLOAD_FOLDER_USERS
 
+def register_or_login():
+    loginForm = LoginForm()
 
-    
+    if loginForm.validate_on_submit():
+        # Поиск пользователя по email
+        user = User.query.filter_by(user_email=form.user_email.data).first()
+
+        # Проверка пароля (желательно хранить хэш пароля вместо текста)
+        if user and check_password_hash(user.user_password, form.user_password.data):
+            login_user(user)
+            flash("You have successfully logged in!", 'success')
+            return redirect(url_for('main.home'))
+        else:
+            flash('Invalid email or password. Please try again.', 'danger')
+
+    registerForm = RegisterForm()
+
+    if registerForm.validate_on_submit():
+        # Создаем нового пользователя
+        hashed_password = generate_password_hash(form.user_password.data)
+        new_user = User(user_name=form.user_name.data,
+                        user_password=hashed_password,
+                        user_phone=form.user_phone.data,
+                        user_email=form.user_email.data)
+        db.session.add(new_user)
+        db.session.commit()
+
+        # Логиним пользователя после регистрации
+        login_user(new_user)
+        flash("Registration successful! You are now logged in.", 'success')
+        db.session.close()
+        return redirect(url_for("main.home"))
+
+    return [loginForm, registerForm]
     
 @bp.route('/')
 def home():
-    return render_template('home.html')
+    forms = register_or_login()
+
+    return render_template('home.html', loginForm=forms[0], registerForm=forms[1])
 
 @bp.route('/add_new_car', methods=["POST", "GET"])
 def add_new_car():
@@ -41,18 +75,20 @@ def add_new_car():
 @bp.route('/cars', methods=["GET"])
 def cars():
     cars = Cars.query.all()
-    return render_template("cars.html", cars=cars)
+    forms = register_or_login()
+
+    return render_template("cars.html", cars=cars, loginForm=forms[0], registerForm=forms[1])
 
 @bp.route('/register', methods=["GET", "POST"])
 def register():
     form = RegisterForm()
-    
+
     if form.validate_on_submit():
         # Создаем нового пользователя
         hashed_password = generate_password_hash(form.user_password.data)
-        new_user = User(user_name=form.user_name.data, 
-                        user_password=hashed_password, 
-                        user_phone=form.user_phone.data, 
+        new_user = User(user_name=form.user_name.data,
+                        user_password=hashed_password,
+                        user_phone=form.user_phone.data,
                         user_email=form.user_email.data)
         db.session.add(new_user)
         db.session.commit()
@@ -73,10 +109,10 @@ def login():
     if form.validate_on_submit():
         # Поиск пользователя по email
         user = User.query.filter_by(user_email=form.user_email.data).first()
-        
+
         # Проверка пароля (желательно хранить хэш пароля вместо текста)
         if user and check_password_hash(user.user_password, form.user_password.data):
-            login_user(user)    
+            login_user(user)
             flash("You have successfully logged in!", 'success')
             return redirect(url_for('main.home'))
         else:
@@ -95,16 +131,20 @@ def logout():
 @bp.route("/my_profile/<string:user_name>", methods=["GET", "POST"])
 @login_required 
 def my_profile(user_name):
+    forms = register_or_login()
     user = User.query.filter_by(user_name=user_name).first()
     if not user:
         flash('Пользователь не найден', 'warning')
         return redirect(url_for('main.home'))
-    return render_template("my_profile.html", user=user)
+
+    return render_template("my_profile.html", user=user, loginForm=forms[0], registerForm=forms[1])
 
 @bp.route('/cars/create-order/<int:car_id>', methods=["GET", "POST"])
 def create_order(car_id):
     form = OrderForm()
-    car = Cars.query.filter_by(id=car_id).first() 
+    car = Cars.query.filter_by(id=car_id).first()
+    forms = register_or_login()
+
     
     # Проверка существования автомобиля
     if car is None:
@@ -157,12 +197,14 @@ def create_order(car_id):
         return redirect(url_for('main.home'))
 
 
-    return render_template('create_order.html', form=form, car=car)
+    return render_template('create_order.html', form=form, car=car, loginForm=forms[0], registerForm=forms[1])
 
 @bp.route('/edit')
 def edit():
+    forms = register_or_login()
+
     cars = Cars.query.all()  # Получаем все машины из базы данных
-    return render_template("edit.html", cars=cars)
+    return render_template("edit.html", cars=cars, loginForm=forms[0], registerForm=forms[1])
 
 @bp.route('/edit/del<int:car_id>')
 def delete(car_id):
@@ -177,11 +219,3 @@ def delete(car_id):
     db.session.delete(car)
     db.session.commit()
     return redirect(url_for("main.edit"))
-
-@bp.context_processor
-def inject_form():
-    return dict(form=RegisterForm())
-
-@bp.context_processor
-def inject_form():
-    return dict(form_2=LoginForm())

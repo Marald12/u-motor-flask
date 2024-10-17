@@ -56,6 +56,11 @@ footer {
 }
 
 /* Контейнер профиля */
+.profile__wrapper {
+    padding: 0 15px;
+    margin-bottom: 50px;
+}
+
 .profile-container {
     max-width: 900px;
     margin: 50px auto;
@@ -92,6 +97,11 @@ footer {
 }
 
 /* История заказов */
+.order-history {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
 .order-history h2 {
     font-size: 22px;
     margin-bottom: 20px;
@@ -652,4 +662,115 @@ footer {
     background: #1E2122;
     bottom: -10px;
 }
+
+
+/* дата */
+.flatpickr-calendar {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.flatpickr-day {
+    border-radius: 50%;
+    color: #333;
+}
+
+.flatpickr-day.today {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.flatpickr-day.selected {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* тайм */
+.custom-time-picker {
+    background-color: #f9f9f9;
+    border: 2px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.flatpickr-time {
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.flatpickr-time input {
+    font-size: 16px;
+    border: none;
+    color: #333;
+}
+
+.flatpickr-time .flatpickr-hour, .flatpickr-time .flatpickr-minute {
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.flatpickr-time .flatpickr-hour:hover, .flatpickr-time .flatpickr-minute:hover {
+    background-color: #cce7ff;
+    cursor: pointer;
+}
+
+.popup_auth_wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popup_hide {
+    opacity: 0;
+    z-index: -999;
+}
+.popup_hide > .popup_auth_container {
+    transform: scale(0);
+}
+.popup_show {
+    opacity: 1;
+    z-index: 999;
+}
+.popup_show > .popup_auth_container {
+    transform: scale(1);
+}
+.popup_auth_container {
+    background: #fff;
+    padding: 100px;
+    border-radius: 30px;
+    position: relative;
+    transform: scale(0);
+    transition: .3s ease-in-out;
+}
+.popup_auth_header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #1E2122;
+    color: #ffffff;
+    padding: 15px 15px;
+    border-radius: 25px 25px 0 0;
+    display: flex;
+    justify-content: center;
+    text-transform: uppercase;
+    font-family: "Open sans", sans-serif;
+    font-weight: 500;
+    font-size: 19px;
+}
+.popup_auth_header > span {
+    position: absolute;
+    right: 20px;
+    top: 5px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
 /* Конец*/
