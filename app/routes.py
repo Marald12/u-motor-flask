@@ -178,4 +178,10 @@ def delete(car_id):
     db.session.commit()
     return redirect(url_for("main.edit"))
 
+@bp.context_processor
+def inject_form():
+    return dict(form=RegisterForm())
 
+@bp.context_processor
+def inject_form():
+    return dict(form_2=LoginForm())

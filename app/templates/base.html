@@ -89,6 +89,65 @@
     <main  >
             {% block content %}
             {% endblock %}
+
+        <!-- Модальные окна для входа и регистрации -->
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loginModalLabel">Вхід</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ url_for('main.login') }}" method="POST">
+                            {{ form_2.hidden_tag() }}
+                            <div class="mb-3">
+                                {{ form_2.user_email.label(class="form-label") }}
+                                {{ form_2.user_email(class="form-control") }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_2.user_password.label(class="form-label") }}
+                                {{ form_2.user_password(class="form-control") }}
+                            </div>
+                            {{form_2.submit()}}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="registerModalLabel">Реєстрація</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ url_for('main.register') }}" method="POST">
+                            {{ form.hidden_tag() }}
+                            <div class="mb-3">
+                                {{ form.user_name.label(class="form-label") }}
+                                {{ form.user_name(class="form-control") }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form.user_email.label(class="form-label") }}
+                                {{ form.user_email(class="form-control") }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form.user_phone.label(class="form-label") }}
+                                {{ form.user_phone(class="form-control") }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form.user_password.label(class="form-label") }}
+                                {{ form.user_password(class="form-control") }}
+                            </div>
+                            <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer class="footer text-light">
